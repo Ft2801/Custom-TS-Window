@@ -1,0 +1,288 @@
+:root {
+  --hue: 260;
+  /* Default Hue (Violet) */
+  --bg-color: #0f1016;
+  --text-color: #e2e8f0;
+
+  /* Dynamic Colors derived from Hue */
+  --primary-glow: hsl(var(--hue), 80%, 65%);
+  --secondary-glow: hsl(calc(var(--hue) + 45), 80%, 65%);
+  --border-color: hsla(var(--hue), 50%, 80%, 0.15);
+  /* Tinted border */
+  --title-bar-height: 32px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body,
+html {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: transparent;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  color: var(--text-color);
+}
+
+#app {
+  width: 100%;
+  height: 100%;
+  background: rgba(15, 16, 22, 0.95);
+  border-radius: 16px;
+  /* Use the tinted border */
+  border: 1px solid var(--border-color);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5),
+    0 0 0 1px hsla(var(--hue), 100%, 70%, 0.1);
+  /* Inner highlighted border */
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+
+  opacity: 0;
+  transform: scale(0.95);
+  transition: opacity 0.3s ease-out, transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+#app.visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+#app.fading-out {
+  opacity: 0;
+  transform: scale(0.95);
+  transition: opacity 0.2s ease-in, transform 0.2s ease-in;
+}
+
+#app.maximizing {
+  opacity: 0;
+  transform: scale(1.02);
+  transition: opacity 0.2s ease-in, transform 0.2s ease-in;
+}
+
+/* Updated Gradient Background to use --hue */
+#app::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  /* Dynamic Hue Gradients */
+  background: radial-gradient(circle at 50% 50%, hsla(var(--hue), 80%, 65%, 0.15), transparent 50%),
+    radial-gradient(circle at 80% 20%, hsla(calc(var(--hue) + 60), 80%, 65%, 0.1), transparent 30%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+#title-bar {
+  height: var(--title-bar-height);
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10px;
+  background: transparent;
+  -webkit-app-region: drag;
+  z-index: 50;
+}
+
+.window-controls {
+  display: flex;
+  align-items: center;
+}
+
+.app-title {
+  font-size: 12px;
+  font-weight: 500;
+  opacity: 0.5;
+  letter-spacing: 0.5px;
+  margin-left: 8px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.control-btn {
+  -webkit-app-region: no-drag;
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.7);
+  width: 28px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  margin-left: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.control-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+.close-btn:hover {
+  background: #ef4444;
+  color: #fff;
+}
+
+.content {
+  flex: 1;
+  padding: calc(var(--title-bar-height) + 1.5rem) 2rem 2rem 2rem;
+  overflow-y: auto;
+  z-index: 1;
+  position: relative;
+}
+
+.hero {
+  text-align: center;
+  margin-bottom: 3rem;
+  position: relative;
+}
+
+h1 {
+  font-size: 3.5rem;
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+  background: linear-gradient(to right, #fff, #94a3b8);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.1));
+}
+
+p {
+  color: #94a3b8;
+  font-size: 1.1rem;
+}
+
+.glow-sphere {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 150px;
+  height: 150px;
+  background: var(--primary-glow);
+  filter: blur(80px);
+  opacity: 0.4;
+  z-index: -1;
+  animation: pulse 4s infinite ease-in-out;
+}
+
+@keyframes pulse {
+
+  0%,
+  100% {
+    opacity: 0.4;
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  50% {
+    opacity: 0.6;
+    transform: translate(-50%, -50%) scale(1.2);
+  }
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.card {
+  background: rgba(255, 255, 255, 0.03);
+  padding: 1.5rem;
+  border-radius: 12px;
+
+  /* Tinted border on cards too */
+  border: 1px solid var(--border-color);
+
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card:hover {
+  background: rgba(255, 255, 255, 0.06);
+  transform: translateY(-5px);
+  /* Use tinted shadow */
+  box-shadow: 0 10px 30px -10px hsla(var(--hue), 50%, 50%, 0.3);
+  border-color: var(--primary-glow);
+}
+
+.card h3 {
+  margin-bottom: 0.5rem;
+  font-size: 1.25rem;
+  color: #f1f5f9;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.slider-container {
+  padding: 10px 20px 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: transparent;
+  z-index: 10;
+}
+
+.rainbow-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  /* Best practice */
+  width: 100%;
+  height: 6px;
+  border-radius: 3px;
+  background: linear-gradient(to right,
+      hsl(0, 100%, 50%),
+      hsl(60, 100%, 50%),
+      hsl(120, 100%, 50%),
+      hsl(180, 100%, 50%),
+      hsl(240, 100%, 50%),
+      hsl(300, 100%, 50%),
+      hsl(360, 100%, 50%));
+  outline: none;
+  opacity: 0.8;
+  transition: opacity .2s;
+  cursor: pointer;
+}
+
+.rainbow-slider:hover {
+  opacity: 1;
+}
+
+.rainbow-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #fff;
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  border: 2px solid rgba(255, 255, 255, 0.8);
+}

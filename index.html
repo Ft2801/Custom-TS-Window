@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Custom Electron Window</title>
+</head>
+
+<body>
+  <div id="app">
+    <header id="title-bar">
+      <!-- Removed emoji -->
+      <div class="app-title">My Custom App</div>
+      <div class="window-controls">
+        <button id="minimize" class="control-btn" title="Minimize">
+          <!-- Simple Dash SVG -->
+          <svg width="10" height="1" viewBox="0 0 10 1">
+            <rect width="10" height="1" fill="currentColor" />
+          </svg>
+        </button>
+        <button id="maximize" class="control-btn" title="Maximize">
+          <!-- Simple Square SVG -->
+          <svg width="10" height="10" viewBox="0 0 10 10">
+            <rect width="10" height="10" fill="none" stroke="currentColor" stroke-width="1" />
+          </svg>
+        </button>
+        <button id="close" class="control-btn close-btn" title="Close">
+          <!-- Simple X SVG -->
+          <svg width="10" height="10" viewBox="0 0 10 10">
+            <path d="M1 1L9 9M9 1L1 9" stroke="currentColor" stroke-width="1.2" />
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="content">
+      <div class="hero">
+        <h1>Welcome</h1>
+        <p>Check out these slick lighting effects.</p>
+        <div class="glow-sphere"></div>
+      </div>
+
+      <div class="grid">
+        <div class="card">
+          <h3>Modern UI</h3>
+          <p>Glassmorphism, gradients, and rounded corners.</p>
+        </div>
+        <div class="card">
+          <h3>Fast</h3>
+          <p>Powered by Vite & Electron.</p>
+        </div>
+      </div>
+    </main>
+
+    <footer class="slider-container">
+      <input type="range" id="color-slider" min="0" max="360" value="260" class="rainbow-slider">
+    </footer>
+  </div>
+  <script type="module" src="/src/renderer.ts"></script>
+</body>
+
+</html>

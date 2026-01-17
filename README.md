@@ -1,4 +1,4 @@
-# Custom Electron Window
+# Custom TS Window
 
 A modern, frameless desktop application template built with **Electron**, **TypeScript**, and **Vite**.
 
